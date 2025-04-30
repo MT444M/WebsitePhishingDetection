@@ -1,0 +1,32 @@
+StealthPhisher
+├── data
+│   ├── StealthPhisher2025.csv  #data set
+│   ├── tld_freq.csv     # top level domain frequency
+├── Data_Collection        # data collector
+│   ├── __pycache__
+│   ├── Collectors     #collectors
+│   ├── __init__.py
+│   ├── domain_whois.py    
+│   ├── dynamic_content_extractor.py
+│   ├── reputation_threat_feeds.py
+│   ├── social_brand_presence.py
+│   ├── ssl_hosting.py
+│   ├── static_content_extractor.py
+│   ├── web_tech_fingerprinting.py
+│   ├── data_collector.py
+│   ├── feature_derivation.py
+│   ├── html_structural.py
+├── test_method
+│   ├── test.ipynb
+│   ├── test2.ipynb
+│   ├── __init__.py
+├── models
+│   ├── model_RF.pkl
+│   ├── RF_PishingDetection.ipynb
+│   ├── test_RF_PishingDetection.ipynb
+├── Webapp
+│   ├── __pycache__
+│   ├── __init__.py
+│   ├── analyze_url.py
+│   ├── app.py
+│   ├── model_feature_predict.py

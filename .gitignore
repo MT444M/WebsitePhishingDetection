@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+*.code-workspace
+
+# Data files
+*.csv
+!data/tld_freq.csv
+
+# Models
+*.pkl
+!models/model_RF.pkl
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Logs and temp files
+*.log
+*.tmp
+chrome-data/
+
+# Docker
+.docker/

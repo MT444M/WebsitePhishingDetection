@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Notebooks file
+*.ipynb
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Environment files
+.env
+
+# First ignore all CSV files
+*.csv
+
+# Then explicitly allow the tld_freq.csv file
+!data/tld_freq.csv
+
+# Allow model files
+!models/model_RF.pkl
+
+# Other unnecessary files
+.DS_Store

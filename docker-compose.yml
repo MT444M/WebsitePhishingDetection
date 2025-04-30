@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  stealthphisher:
+    build: .
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - chrome-data:/tmp/chrome-data
+    environment:
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - GRADIO_SERVER_PORT=7860
+      - PYTHONUNBUFFERED=1
+      - DISPLAY=:99
+      - SELENIUM_BROWSER_BINARY_LOCATION=/usr/bin/google-chrome-stable
+      - CHROME_BIN=/usr/bin/google-chrome-stable
+      - CHROMEDRIVER_PATH=/usr/local/bin/chromedriver
+      - TMPDIR=/tmp/chrome-data
+    shm_size: 2gb
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stealthphisher.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.stealthphisher.entrypoints=websecure"
+      - "traefik.http.routers.stealthphisher.tls=true"
+      - "traefik.http.services.stealthphisher.loadbalancer.server.port=7860"
+      # Health check labels
+      - "traefik.http.services.stealthphisher.loadbalancer.healthcheck.path=/health"
+      - "traefik.http.services.stealthphisher.loadbalancer.healthcheck.interval=30s"
+      - "traefik.http.services.stealthphisher.loadbalancer.healthcheck.timeout=5s"
+      # Security headers
+      - "traefik.http.middlewares.security-headers.headers.frameDeny=true"
+      - "traefik.http.middlewares.security-headers.headers.sslRedirect=true"
+      - "traefik.http.middlewares.security-headers.headers.browserXssFilter=true"
+      - "traefik.http.routers.stealthphisher.middlewares=security-headers"
+
+volumes:
+  chrome-data:

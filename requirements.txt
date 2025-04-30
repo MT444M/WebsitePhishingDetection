@@ -1,0 +1,15 @@
+selenium
+tldextract
+python-whois
+requests
+beautifulsoup4
+pandas
+scikit-learn
+numpy
+joblib
+gradio
+lxml
+tqdm
+python-dotenv
+uvicorn
+webdriver-manager  # Added for better ChromeDriver management
