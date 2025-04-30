@@ -4,7 +4,7 @@ services:
   stealthphisher:
     build: .
     ports:
-      - "7860"
+      - "7860:7860"
     volumes:
       - ./data:/app/data
       - ./models:/app/models
@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stealthphisher.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.stealthphisher.rule=Host(`stealthphisher.example.com`)"
       - "traefik.http.routers.stealthphisher.entrypoints=websecure"
       - "traefik.http.routers.stealthphisher.tls=true"
       - "traefik.http.services.stealthphisher.loadbalancer.server.port=7860"

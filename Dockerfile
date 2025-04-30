@@ -60,8 +60,8 @@ RUN ln -sf /usr/local/bin/chromedriver /usr/bin/chromedriver
 ENV DISPLAY=:99
 
 # Add a healthcheck to ensure the app is running correctly
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD python /app/healthcheck.py || exit 1
+# HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+#     CMD python /app/healthcheck.py || exit 1
 
 # Expose port
 EXPOSE 7860
