@@ -68,7 +68,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 MODELS_DIR = os.path.join(BASE_DIR, 'models')
 
-# Modify the make_prediction function
+
+# Add fallback paths for Docker
+if not os.path.exists(os.path.join(DATA_DIR, "tld_freq.csv")):
+    DATA_DIR = "/app/data"
+    MODELS_DIR = "/app/models"
+
 def make_prediction(
     url, 
     model_path=os.path.join(MODELS_DIR, "model_RF.pkl"), 
@@ -77,13 +82,11 @@ def make_prediction(
     """Makes prediction using collected features"""
     global _collector
     try:
-        # Reuse collector if available
-        if not _collector or _collector.url != url:
-            _collector = URLFeatureCollector(url)
-            _collector.collect_all_features()
-            
-        prediction_data = _collector.get_prediction(model_path, tld_freq_path)
-        return format_prediction(prediction_data)
+        # Verify files exist
+        if not os.path.exists(tld_freq_path):
+            raise FileNotFoundError(f"tld_freq.csv not found at {tld_freq_path}")
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"model_RF.pkl not found at {model_path}")
     
     except Exception as e:
         print(f"Error details: DATA_DIR={DATA_DIR}, file exists={os.path.exists(tld_freq_path)}")
