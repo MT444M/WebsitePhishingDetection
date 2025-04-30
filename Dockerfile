@@ -46,16 +46,23 @@ RUN wget -q https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriv
 # Create app directory
 WORKDIR /app
 
-# Create required directories
+# Create required directories explicitly
 RUN mkdir -p /app/data /app/models
 
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy data and model files
-COPY data/tld_freq.csv /app/data/
-COPY models/model_RF.pkl /app/models/
+# Debug - list source directory
+RUN echo "Contents of current directory:" && ls -la
+
+# Copy data files with verbose output
+COPY data/tld_freq.csv /app/data/tld_freq.csv
+RUN echo "After copy - contents of data directory:" && ls -la /app/data
+
+# Copy model files
+COPY  models/model_RF.pkl /app/models/model_RF.pkl
+RUN echo "After copy - contents of models directory:" && ls -la /app/models
 
 # Copy the rest of the application
 COPY . .
