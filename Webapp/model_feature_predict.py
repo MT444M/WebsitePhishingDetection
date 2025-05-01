@@ -60,17 +60,49 @@ def collect_features(url):
         error_msg = f'<div class="error">⚠️ Feature collection failed: {str(e)}</div>'
         return error_df, error_df, error_df, error_df, error_msg
     
+# ------------------------------------------------------------
+# -------------------------------------------------------------
+# Get the absolute path of the current file
+current_file = os.path.abspath(__file__)
 
-# Define base paths
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE_DIR, 'data')
-MODELS_DIR = os.path.join(BASE_DIR, 'models')
+# Different path resolution strategies
+paths = [
+    # Strategy 1: Docker paths
+    {"data": "/app/data", "models": "/app/models"},
+    
+    # Strategy 2: Relative to current file
+    {
+        "data": os.path.join(os.path.dirname(os.path.dirname(current_file)), "data"),
+        "models": os.path.join(os.path.dirname(os.path.dirname(current_file)), "models")
+    },
+    
+    # Strategy 3: Relative to current working directory
+    {
+        "data": os.path.join(os.getcwd(), "data"),
+        "models": os.path.join(os.getcwd(), "models")
+    }
+]
 
+# Try different path strategies
+def find_valid_paths():
+    for path_set in paths:
+        if os.path.exists(os.path.join(path_set["data"], "tld_freq.csv")) and \
+           os.path.exists(os.path.join(path_set["models"], "model_RF.pkl")):
+            return path_set["data"], path_set["models"]
+    
+    # If no valid paths found, print debug info
+    print("Debug - Current file:", current_file)
+    print("Debug - Current directory:", os.getcwd())
+    print("Debug - Directory contents:", os.listdir())
+    for path_set in paths:
+        print(f"Debug - Checking paths:", path_set)
+        print(f"Data path exists:", os.path.exists(path_set["data"]))
+        print(f"Models path exists:", os.path.exists(path_set["models"]))
+    
+    raise FileNotFoundError("Could not find valid data and model paths")
 
-# Add fallback paths for Docker
-if not os.path.exists(os.path.join(DATA_DIR, "tld_freq.csv")):
-    DATA_DIR = "/app/data"
-    MODELS_DIR = "/app/models"
+# Get valid paths
+DATA_DIR, MODELS_DIR = find_valid_paths()
 
 def make_prediction(
     url, 
