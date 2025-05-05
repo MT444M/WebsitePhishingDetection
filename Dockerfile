@@ -72,9 +72,6 @@ RUN echo "Models directory contents:" && ls -la /app/models
 # Copy the rest of the application
 COPY . .
 
-# Ensure directories exist and have correct permissions
-RUN mkdir -p /app/data /app/models \
-    && chmod -R 755 /app/data /app/models
 
 # Create a symbolic link for ChromeDriver
 RUN ln -sf /usr/local/bin/chromedriver /usr/bin/chromedriver

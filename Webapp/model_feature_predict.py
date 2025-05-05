@@ -167,21 +167,21 @@ def format_prediction(prediction_data):
 
     
 
-# test the function
-if __name__ == "__main__":
-    url = "https://example.com"
+# # test the function
+# if __name__ == "__main__":
+#     url = "https://example.com"
 
-    url_structure_df, content_html_df, security_metrics_df,advanced_metrics_df = collect_features(url)
+#     url_structure_df, content_html_df, security_metrics_df,advanced_metrics_df = collect_features(url)
     
-    print("URL Structure Features:")
+#     print("URL Structure Features:")
 
-    print(url_structure_df)
+#     print(url_structure_df)
     
-    print("\nContent/HTML Metrics:")
-    print(content_html_df)
+#     print("\nContent/HTML Metrics:")
+#     print(content_html_df)
     
-    print("\nSecurity-Related Metrics:")
-    print(security_metrics_df)
+#     print("\nSecurity-Related Metrics:")
+#     print(security_metrics_df)
     
-    print("\nAdvanced Statistical Metrics:")
-    print(advanced_metrics_df)
+#     print("\nAdvanced Statistical Metrics:")
+#     print(advanced_metrics_df)
